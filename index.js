@@ -12,7 +12,6 @@ class Hori {
     this.processEnv = null;
     this.env = null;
     this.config = {};
-
     this.application = null
   }
 
@@ -37,7 +36,7 @@ class Hori {
 
     this.setMiddleware()
 
-    this.application = require("./HoriApplication")
+    this.application = require("./HoriApplication").create(this)
   }
 
   setMiddleware(){
@@ -54,13 +53,7 @@ class Hori {
   }
 
   run(){
-    this.app.post('/', (req, res) => {
-      res.send('Hello World!')
-    })
-    const port = this.config.port
-    this.logger.info("Hori web server (v0.0.1)")
-    this.logger.info(`Listening on localhost:${port}, CTRL+C to stop`)
-    this.app.listen(port, "0.0.0.0");
+    this.application.run()
   }
 }
 
