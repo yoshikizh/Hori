@@ -12,10 +12,11 @@ class Hori {
     this.processEnv = null;
     this.env = null;
     this.config = {};
+
+    this.application = null
   }
 
   initialize(){
-    console.log(this.processEnv)
     this.processEnv = process.env
     this.libs.express = require('express');
     this.app = this.libs.express();
@@ -34,14 +35,9 @@ class Hori {
     this.env = this.processEnv["NODE_ENV"] || "development";
     this.config.port = this.processEnv["port"] || 3000;
 
-
-    this.parseCommandLine()
     this.setMiddleware()
-  }
 
-
-  parseCommandLine(){
-    console.log(process.env)
+    this.application = require("./HoriApplication")
   }
 
   setMiddleware(){
