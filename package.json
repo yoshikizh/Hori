@@ -1,0 +1,17 @@
+{
+  "name": "hori",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test.js"
+  },
+  "dependencies": {
+    "express": "^4.16.0"
+  },
+  "keywords": [
+    "mvc"
+  ],
+  "author": "yoshikizh",
+  "license": "ISC"
+}
