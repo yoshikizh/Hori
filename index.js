@@ -61,10 +61,10 @@ class Hori {
     this.app.post('/', (req, res) => {
       res.send('Hello World!')
     })
-
+    const port = this.config.port
     this.logger.info("Hori web server (v0.0.1)")
-    this.logger.info("Listening on localhost:3000, CTRL+C to stop")
-    this.app.listen(3000, "0.0.0.0");
+    this.logger.info(`Listening on localhost:${port}, CTRL+C to stop`)
+    this.app.listen(port, "0.0.0.0");
   }
 }
 
