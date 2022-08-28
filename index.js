@@ -31,18 +31,18 @@ class Hori {
   setMiddleware(){
     this.app.use(this.libs.log4js.connectLogger(this.libs.log4js.getLogger("http"), { level: 'auto' }));
 
-    // var cookieParser = require('cookie-parser');
-    const bodyParser = require('body-parser');
+    this.libs.cookieParser = require('cookie-parser');
+    this.libs.bodyParser = require('body-parser');
 
-    this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: false }));
-    // this.app.use(cookieParser());
+    this.app.use(this.libs.bodyParser.json());
+    this.app.use(this.libs.bodyParser.urlencoded({ extended: false }));
+    this.app.use(this.libs.cookieParser());
     this.app.use(this.libs.express.static(path.join(this.root, 'public')));
 
   }
 
   run(){
-    this.app.get('/', (req, res) => {
+    this.app.post('/', (req, res) => {
       res.send('Hello World!')
     })
 
