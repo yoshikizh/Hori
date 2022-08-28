@@ -9,6 +9,9 @@ class Hori {
   }
 
   initialize(){
+    this.libs.express = require('express');
+    this.app = this.libs.express();
+
     this.binPath = process.execPath
     this.root = process.cwd()
     this.npmRoot = __dirname
@@ -20,12 +23,14 @@ class Hori {
     });
     this.logger = this.libs.log4js.getLogger("development");
 
+    this.setMiddleware()
+  }
+
+  setMiddleware(){
+    this.app.use(this.libs.log4js.connectLogger(this.libs.log4js.getLogger("http"), { level: 'auto' }));
   }
 
   run(){
-    this.libs.express = require('express');
-    this.app = this.libs.express();
-
     this.app.get('/', (req, res) => {
       res.send('Hello World!')
     })
