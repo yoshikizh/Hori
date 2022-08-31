@@ -1,10 +1,30 @@
 class HoriApplication {
   constructor(hori){
     this.hori = hori
+    this.routes = null;
+  }
+
+  initialize(){
     this.routes = require('./HoriRouting.js').create();
   }
 
   run(){
+    this.setMiddleware();
+    this.listen()
+  }
+
+  setMiddleware(){
+    const path = require('path');
+    this.hori.express.use(this.hori.libs.log4js.connectLogger(this.hori.libs.log4js.getLogger("http"), { level: 'auto' }));
+    this.hori.libs.cookieParser = require('cookie-parser');
+    this.hori.libs.bodyParser = require('body-parser');
+    this.hori.express.use(this.hori.libs.bodyParser.json());
+    this.hori.express.use(this.hori.libs.bodyParser.urlencoded({ extended: false }));
+    this.hori.express.use(this.hori.libs.cookieParser());
+    this.hori.express.use(this.hori.libs.express.static(path.join(this.hori.root, 'public')));
+  }
+
+  listen(){
     this.hori.express.get('/', (req, res) => {
       res.send('Hello World!')
     })

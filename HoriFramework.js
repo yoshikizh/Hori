@@ -1,5 +1,3 @@
-const path = require('path');
-
 class HoriFramework {
   constructor(){
     this.libs = {}
@@ -34,22 +32,10 @@ class HoriFramework {
     this.env = this.processEnv["NODE_ENV"] || "development";
     this.config.port = this.processEnv["port"] || 3000;
 
-    this.setMiddleware()
+    // this.setMiddleware()
 
     this.application = require("./HoriApplication").create(this)
     return this
-  }
-
-  setMiddleware(){
-    this.express.use(this.libs.log4js.connectLogger(this.libs.log4js.getLogger("http"), { level: 'auto' }));
-
-    this.libs.cookieParser = require('cookie-parser');
-    this.libs.bodyParser = require('body-parser');
-
-    this.express.use(this.libs.bodyParser.json());
-    this.express.use(this.libs.bodyParser.urlencoded({ extended: false }));
-    this.express.use(this.libs.cookieParser());
-    this.express.use(this.libs.express.static(path.join(this.root, 'public')));
   }
 
   run(){
