@@ -6,7 +6,7 @@ class Hori {
     this.binPath = null;
     this.root = null;
     this.npmRoot = null;
-    this.app = null;
+    this.express = null;
     this.logger = null;
     this.nodeEnv = null;
     this.processEnv = null;
@@ -18,7 +18,7 @@ class Hori {
   initialize(){
     this.processEnv = process.env
     this.libs.express = require('express');
-    this.app = this.libs.express();
+    this.express = this.libs.express();
 
     this.binPath = process.execPath
     this.root = process.cwd()
@@ -40,15 +40,15 @@ class Hori {
   }
 
   setMiddleware(){
-    this.app.use(this.libs.log4js.connectLogger(this.libs.log4js.getLogger("http"), { level: 'auto' }));
+    this.express.use(this.libs.log4js.connectLogger(this.libs.log4js.getLogger("http"), { level: 'auto' }));
 
     this.libs.cookieParser = require('cookie-parser');
     this.libs.bodyParser = require('body-parser');
 
-    this.app.use(this.libs.bodyParser.json());
-    this.app.use(this.libs.bodyParser.urlencoded({ extended: false }));
-    this.app.use(this.libs.cookieParser());
-    this.app.use(this.libs.express.static(path.join(this.root, 'public')));
+    this.express.use(this.libs.bodyParser.json());
+    this.express.use(this.libs.bodyParser.urlencoded({ extended: false }));
+    this.express.use(this.libs.cookieParser());
+    this.express.use(this.libs.express.static(path.join(this.root, 'public')));
 
   }
 
