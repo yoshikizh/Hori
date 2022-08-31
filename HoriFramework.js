@@ -47,6 +47,7 @@ class HoriFramework {
     if (!HoriFramework.__instance__){
       HoriFramework.__instance__ = new HoriFramework()
       global.Hori = HoriFramework.__instance__
+      global.HoriApplicationController = require("./HoriApplicationController")
     }
     return Hori
   }
