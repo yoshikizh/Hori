@@ -1,8 +1,8 @@
 {
   "name": "hori",
-  "version": "0.0.2",
-  "description": "",
-  "main": "Hori.js",
+  "version": "0.0.4",
+  "description": "A simple and lightweight Web framework.",
+  "main": "HoriFramework.js",
   "scripts": {
     "test": "cd ./tests && NODE_ENV=development port=3000 node ./index.js"
   },
