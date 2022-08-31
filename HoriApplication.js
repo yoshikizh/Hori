@@ -1,6 +1,7 @@
 class HoriApplication {
   constructor(hori){
     this.hori = hori
+    this.routes = require('./HoriRouting.js').create();
   }
 
   run(){

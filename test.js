@@ -1,4 +1,2 @@
-const Hori = require("./Hori")
-Hori.initialize()
-Hori.run()
-// console.log(Hori)
+require("./HoriFramework").run()
+console.log(Hori)

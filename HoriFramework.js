@@ -1,6 +1,6 @@
 const path = require('path');
 
-class Hori {
+class HoriFramework {
   constructor(){
     this.libs = {}
     this.binPath = null;
@@ -37,6 +37,7 @@ class Hori {
     this.setMiddleware()
 
     this.application = require("./HoriApplication").create(this)
+    return this
   }
 
   setMiddleware(){
@@ -49,12 +50,24 @@ class Hori {
     this.express.use(this.libs.bodyParser.urlencoded({ extended: false }));
     this.express.use(this.libs.cookieParser());
     this.express.use(this.libs.express.static(path.join(this.root, 'public')));
-
   }
 
   run(){
     this.application.run()
   }
-}
 
-module.exports = new Hori();
+  static create(){
+    if (!HoriFramework.__instance__){
+      HoriFramework.__instance__ = new HoriFramework()
+      global.Hori = HoriFramework.__instance__
+    }
+    return Hori
+  }
+
+  static run(config = {}){
+    this.create().initialize().run()
+  }
+}
+HoriFramework.__instance__ = null
+
+module.exports = HoriFramework;
