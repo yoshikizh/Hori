@@ -4,7 +4,7 @@
   "description": "",
   "main": "Hori.js",
   "scripts": {
-    "test": "NODE_ENV=development port=3000 node ./test.js"
+    "test": "cd ./tests && NODE_ENV=development port=3000 node ./index.js"
   },
   "dependencies": {
     "express": "^4.16.0",

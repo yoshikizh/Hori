@@ -10,7 +10,12 @@ class HoriApplication {
 
   run(){
     this.setMiddleware();
+    this.setRouting()
     this.listen()
+  }
+
+  setRouting(){
+    require(`${this.hori.root}/config/routes`);
   }
 
   setMiddleware(){

@@ -35,6 +35,7 @@ class HoriFramework {
     // this.setMiddleware()
 
     this.application = require("./HoriApplication").create(this)
+    this.application.initialize()
     return this
   }
 
