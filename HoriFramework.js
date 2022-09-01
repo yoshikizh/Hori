@@ -50,6 +50,10 @@ class HoriFramework {
   }
 
   run(){
+    // run custom code
+    require(`${this.root}/config/initializer`)()
+
+    // run app
     this.application.run()
   }
 

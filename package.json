@@ -1,10 +1,10 @@
 {
   "name": "hori",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "description": "A simple and lightweight Web framework.",
   "main": "HoriFramework.js",
   "scripts": {
-    "test": "cd ./tests && NODE_ENV=development port=3000 node ./index.js",
+    "test": "cd ./tests && NODE_ENV=development port=3001 node ./index.js",
     "hori": "sh ./bin/hori"
   },
   "bin": {
