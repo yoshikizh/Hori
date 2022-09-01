@@ -1,11 +1,14 @@
 {
   "name": "hori",
-  "version": "0.0.5",
+  "version": "0.0.9",
   "description": "A simple and lightweight Web framework.",
   "main": "HoriFramework.js",
   "scripts": {
     "test": "cd ./tests && NODE_ENV=development port=3000 node ./index.js",
     "hori": "sh ./bin/hori"
+  },
+  "bin": {
+    "hori": "bin/hori"
   },
   "dependencies": {
     "express": "^4.16.0",

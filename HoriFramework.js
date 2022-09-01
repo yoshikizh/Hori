@@ -1,6 +1,7 @@
 class HoriFramework {
   constructor(){
     this.libs = {}
+    this.npmInfo = null
     this.binPath = null;
     this.root = null;
     this.npmRoot = null;
@@ -14,6 +15,7 @@ class HoriFramework {
   }
 
   initialize(){
+    this.npmInfo = require("./package.json")
     this.processEnv = process.env
     this.libs.express = require('express');
     this.express = this.libs.express();
@@ -41,6 +43,13 @@ class HoriFramework {
 
   run(){
     this.application.run()
+  }
+
+  debug(msg){
+    if (Hori.env === "development"){
+      console.log(msg)
+    }
+    this.logger.debug(msg)
   }
 
   static create(){
