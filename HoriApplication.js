@@ -17,7 +17,6 @@ class HoriApplication {
     this.listen()
   }
 
-
   async execAction(req, res, action){
     if (!res.finished){
       await action(req, res);

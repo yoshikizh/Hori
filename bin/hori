@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+HORI_COMMAND=$1 HORI_OPTIONS=$2 node ./main.js

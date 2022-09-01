@@ -1,15 +1,17 @@
 {
   "name": "hori",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A simple and lightweight Web framework.",
   "main": "HoriFramework.js",
   "scripts": {
-    "test": "cd ./tests && NODE_ENV=development port=3000 node ./index.js"
+    "test": "cd ./tests && NODE_ENV=development port=3000 node ./index.js",
+    "hori": "sh ./bin/hori"
   },
   "dependencies": {
     "express": "^4.16.0",
     "log4js": "^6.6.1",
-    "cookie-parser": "^1.4.6"
+    "cookie-parser": "^1.4.6",
+    "pm2": "5.2.0"
   },
   "keywords": [
     "mvc"
