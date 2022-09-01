@@ -166,7 +166,7 @@ class HoriApplication {
 
   listen(){
     const port = this.hori.config.port
-    Hori.debug(`Hori web server (v${this.hori.npmInfo.version})`)
+    Hori.debug(`${this.hori.config.appName} (Hori) web server (v${this.hori.npmInfo.version})`)
     Hori.debug(`Listening on localhost:${port}, CTRL+C to stop`)
     this.hori.express.listen(port, "0.0.0.0");
   }

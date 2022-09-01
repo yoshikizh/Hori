@@ -10,7 +10,7 @@ class HoriFramework {
     this.nodeEnv = null;
     this.processEnv = null;
     this.env = null;
-    this.config = {};
+    this.config = null;
     this.application = null
   }
 
@@ -24,17 +24,25 @@ class HoriFramework {
     this.root = process.cwd()
     this.npmRoot = __dirname
 
-    this.libs.log4js = require("log4js");
-    this.libs.log4js.configure({
-      appenders: { development: { type: "file", filename: "logs/development.log" } },
-      categories: { default: { appenders: ["development"], level: "debug" } },
-    });
-    this.logger = this.libs.log4js.getLogger("development");
-
+    // load env
     this.env = this.processEnv["NODE_ENV"] || "development";
-    this.config.port = this.processEnv["port"] || 3000;
 
-    // this.setMiddleware()
+    // merge config
+    this.config = require(`${this.root}/config/env/${this.env}`)
+
+    // config the log
+    this.libs.log4js = require("log4js");
+    const logDir = this.config.logDir || 'logs'
+    const log4jsConfog = {
+      appenders: {},
+      categories: { default: { appenders: [this.env], level: "debug" } }
+    }
+    log4jsConfog.appenders[this.env] = { type: "file", filename: `${logDir}/${this.env}.log` }
+
+    this.libs.log4js.configure(log4jsConfog);
+    this.logger = this.libs.log4js.getLogger(this.env);
+
+    this.config.port = this.config.port || 3001;
 
     this.application = require("./HoriApplication").create(this)
     this.application.initialize()
