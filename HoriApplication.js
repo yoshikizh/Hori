@@ -112,7 +112,6 @@ class HoriApplication {
       
       const controller_name = routing.controller_name;
       let Controller = this.controllers[controller_name]
-      console.log(this.controllers)
       if (!Controller){
         Controller = require(`${this.hori.root}/app/controllers/${controller_name}Controller`)
         this.controllers[controller_name] = Controller
