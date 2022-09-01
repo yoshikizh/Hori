@@ -2,12 +2,11 @@ class HoriApplication {
   constructor(hori){
     this.hori = hori
     this.routes = null;
-    this.controllers = null;
+    this.controllers = {};
   }
 
   initialize(){
     this.routes = require('./HoriRouting.js').create();
-    this.controllers = require(`${this.hori.root}/app/controllers`);
   }
 
   run(){
@@ -112,7 +111,12 @@ class HoriApplication {
     this.routes.table.forEach((routing) => {
       
       const controller_name = routing.controller_name;
-      const Controller = this.controllers[controller_name];
+      let Controller = this.controllers[controller_name]
+      console.log(this.controllers)
+      if (!Controller){
+        Controller = require(`${this.hori.root}/app/controllers/${controller_name}Controller`)
+        this.controllers[controller_name] = Controller
+      }
 
       if (Controller){
         const path = routing.path;
@@ -162,9 +166,6 @@ class HoriApplication {
   }
 
   listen(){
-    this.hori.express.get('/', (req, res) => {
-      res.send('Hello World!')
-    })
     const port = this.hori.config.port
     Hori.debug(`Hori web server (v${this.hori.npmInfo.version})`)
     Hori.debug(`Listening on localhost:${port}, CTRL+C to stop`)
