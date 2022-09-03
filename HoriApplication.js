@@ -162,6 +162,12 @@ class HoriApplication {
     this.hori.express.use(this.hori.libs.bodyParser.urlencoded({ extended: false }));
     this.hori.express.use(this.hori.libs.cookieParser());
     this.hori.express.use(this.hori.libs.express.static(path.join(this.hori.root, 'public')));
+
+    // set middleware from config
+    const middlewares = require(`${this.hori.root}/config/middlewares`)
+    middlewares.forEach((middleware)=>{
+      this.hori.express.use(middleware)
+    })
   }
 
   listen(){
