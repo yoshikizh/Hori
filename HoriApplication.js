@@ -46,8 +46,16 @@ class HoriApplication {
           const before_action_name = config.name;
           const only_action_arr = config.only;
           const except_action_arr = config.except;
+          const conditionIfFunctionName = config.if;
           if (before_action_name) {
             let before_action = controller[before_action_name];
+            if (conditionIfFunctionName){
+              const conditionIfFunction = controller[conditionIfFunctionName]
+              const conditionIfCallResult = await conditionIfFunction()
+              if (conditionIfCallResult !== true){
+                continue;
+              }
+            }
             if (before_action) {
               before_action = before_action.bind(controller);
               if (only_action_arr) {
