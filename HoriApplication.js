@@ -50,8 +50,9 @@ class HoriApplication {
           if (before_action_name) {
             let before_action = controller[before_action_name];
             if (conditionIfFunctionName){
-              const conditionIfFunction = controller[conditionIfFunctionName]
-              const conditionIfCallResult = await conditionIfFunction()
+              let conditionIfFunction = controller[conditionIfFunctionName]
+              conditionIfFunction = conditionIfFunction.bind(controller)
+              const conditionIfCallResult = conditionIfFunction()
               if (conditionIfCallResult !== true){
                 continue;
               }
