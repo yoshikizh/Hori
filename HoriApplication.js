@@ -79,10 +79,6 @@ class HoriApplication {
 
   async createControllerContext(req, res, Controller, controller_name, action_name){
     this.hori.logger.info(`[${Date.now()}] -- : Started ${req.method} ${req.url} Processing by ${controller_name}#${action_name}`);
-    if (req.method === "POST") {
-      this.hori.logger.info(`Parameters: ${JSON.stringify(req.body)}`)
-    }
-
     try {
       const controller = new Controller(controller_name,action_name);
       controller.req = req;
@@ -94,6 +90,7 @@ class HoriApplication {
       Object.assign(params, req.body)
 
       controller.params = params
+      this.hori.logger.info(`With the paramaters: ${JSON.stringify(params)}`)
 
       let action = controller[action_name];
       if (!action) {
