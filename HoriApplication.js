@@ -113,9 +113,6 @@ class HoriApplication {
         res.status(500).send('Server is busy, please try later .');
       }
       this.hori.logger.error(e);
-      if (this.hori.env === "development"){
-        console.log(e)
-      }
     }
   }
 
