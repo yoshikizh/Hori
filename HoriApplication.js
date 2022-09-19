@@ -82,7 +82,11 @@ class HoriApplication {
     Object.assign(params, req.params)
     Object.assign(params, req.query)
     Object.assign(params, req.body)
-    this.hori.logger.info(`[${Date.now()}] -- : Started ${req.method} ${req.url} Processing by ${controller_name}#${action_name} With the paramaters: ${JSON.stringify(params)}`);
+    const message = `[${Date.now()}] -- : Started ${req.method} ${req.url} Processing by ${controller_name}#${action_name} With the paramaters: ${JSON.stringify(params)}`
+    this.hori.logger.info(message);
+    if (this.hori.env === "development"){
+      console.log(message)
+    }
     try {
       const controller = new Controller(controller_name,action_name);
       controller.req = req;
@@ -109,6 +113,9 @@ class HoriApplication {
         res.status(500).send('Server is busy, please try later .');
       }
       this.hori.logger.error(e);
+      if (this.hori.env === "development"){
+        console.log(e)
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "hori",
-  "version": "0.0.18",
+  "version": "0.0.20",
   "description": "A simple and lightweight Web framework.",
   "main": "HoriFramework.js",
   "scripts": {
