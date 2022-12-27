@@ -104,6 +104,9 @@ class HoriApplication {
       if (action){
         await this.checkAndExecBeforeAction(req, res, Controller, controller, action_name);
         await this.execAction(req, res, action);
+        if (!controller.rendered){
+          controller.render()
+        }
       }
     } catch (e) {
       if (this.hori.env === "development") {
