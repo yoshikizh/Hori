@@ -1,0 +1,12 @@
+{
+  "name": "Your application name",
+  "version": "0.0.1",
+  "description": "Your application description",
+  "scripts": {
+    "dev": "hori s"
+  },
+  "dependencies": {
+    "hori": "Your hori version",
+  },
+  "license": "ISC"
+}

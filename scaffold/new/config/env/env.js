@@ -1,6 +1,6 @@
 module.exports = {
 	// For Hori
-	appName: "Hori application",
+	appName: "Your application name",
 	logDir: `logs`,
 
 	// For Application

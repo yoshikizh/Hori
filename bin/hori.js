@@ -94,7 +94,7 @@ class HoriBin {
     console.log(chalk.green(`Created file config/routes.js`))
 
     data = fs.readFileSync(scaffoldPath+"/new/config/env/env.js")
-    data = data.replace("Your application name", appName)
+    data = data.toString().replace("Your application name", appName)
     fs.writeFileSync(`${appPath}/config/env/development.js`, data)
     console.log(chalk.green(`Created file config/env/development.js`))
 
@@ -106,18 +106,9 @@ class HoriBin {
     fs.writeFileSync(`${appPath}/app/controllers/HomeApplication.js`, data)
     console.log(chalk.green(`Created file app/controllers/HomeApplication.js`))
 
-    data = {
-      "name": appName,
-      "version": "0.0.1",
-      "description": "Your application description",
-      "scripts": {
-        "dev": "hori s"
-      },
-      "dependencies": {
-        "hori": `^${this.package.version}`,
-      },
-      "license": "ISC"
-    }
+    data = fs.readFileSync(scaffoldPath+"/new/package.json")
+    data = data.toString().replace("Your application name", appName)
+    data = data.toString().replace("Your hori version", `^${this.package.version}`)
     fs.writeFileSync(`${appPath}/package.json`, data)
     console.log(chalk.green(`Created file package.json`))
 
