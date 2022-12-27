@@ -1,3 +1,5 @@
+const fs = require("fs")
+
 class HoriFramework {
   constructor(){
     this.libs = {}
@@ -27,6 +29,8 @@ class HoriFramework {
     // load env
     this.env = this.processEnv["NODE_ENV"] || "development";
 
+    this.checkEnv()
+
     // merge config
     this.config = require(`${this.root}/config/env/${this.env}`)
 
@@ -47,6 +51,14 @@ class HoriFramework {
     this.application = require("./HoriApplication").create(this)
     this.application.initialize()
     return this
+  }
+
+  checkEnv(){
+    const file = `${this.root}/config/env/${this.env}.js`
+    console.log(1111, file)
+    if (!fs.existsSync(file)) {
+
+    }
   }
 
   run(){

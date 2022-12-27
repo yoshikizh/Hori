@@ -1,6 +1,6 @@
 {
   "name": "hori",
-  "version": "0.0.20",
+  "version": "0.0.22",
   "description": "A simple and lightweight Web framework.",
   "main": "HoriFramework.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "hori": "sh ./bin/hori"
   },
   "bin": {
-    "hori": "bin/hori"
+    "hori": "./bin/hori.js"
   },
   "dependencies": {
     "express": "^4.16.0",
