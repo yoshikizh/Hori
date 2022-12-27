@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 const chalk = require("chalk")
 const fs = require("fs")
+const path = require("path")
 
 class HoriBin {
 
   constructor(){
     this.package = require("../package")
     this.argv = process.argv
-    this.command = this.argv[1]
+    this.command = this.argv[2]
   }
 
   fetchArgv(key){
@@ -77,30 +78,48 @@ class HoriBin {
     fs.mkdirSync(`${appPath}/config/env`)
     console.log(chalk.green(`Created folder config/env`))
 
+    const scaffoldPath = path.join(__dirname, "..", "scaffold")
+
     let data
-    data = fs.readFileSync("./scaffold/new/config/initializer.js")
+    data = fs.readFileSync(scaffoldPath+"/new/config/initializer.js")
     fs.writeFileSync(`${appPath}/config/initializer.js`, data)
     console.log(chalk.green(`Created file config/initializer.js`))
 
-    data = fs.readFileSync("./scaffold/new/config/middlewares.js")
+    data = fs.readFileSync(scaffoldPath+"/new/config/middlewares.js")
     fs.writeFileSync(`${appPath}/config/middlewares.js`, data)
     console.log(chalk.green(`Created file config/middlewares.js`))
 
-    data = fs.readFileSync("./scaffold/new/config/routes.js")
+    data = fs.readFileSync(scaffoldPath+"/new/config/routes.js")
     fs.writeFileSync(`${appPath}/config/routes.js`, data)
     console.log(chalk.green(`Created file config/routes.js`))
 
-    data = fs.readFileSync("./scaffold/new/config/env/env.js")
+    data = fs.readFileSync(scaffoldPath+"/new/config/env/env.js")
+    data = data.replace("Your application name", appName)
     fs.writeFileSync(`${appPath}/config/env/development.js`, data)
     console.log(chalk.green(`Created file config/env/development.js`))
 
-    data = fs.readFileSync("./scaffold/new/app/controllers/ApplicationController.js")
+    data = fs.readFileSync(scaffoldPath+"/new/app/controllers/ApplicationController.js")
     fs.writeFileSync(`${appPath}/app/controllers/ApplicationController.js`, data)
     console.log(chalk.green(`Created file app/controllers/ApplicationController.js`))
 
-    data = fs.readFileSync("./scaffold/new/app/controllers/HomeApplication.js")
+    data = fs.readFileSync(scaffoldPath+"/new/app/controllers/HomeApplication.js")
     fs.writeFileSync(`${appPath}/app/controllers/HomeApplication.js`, data)
     console.log(chalk.green(`Created file app/controllers/HomeApplication.js`))
+
+    data = {
+      "name": appName,
+      "version": "0.0.1",
+      "description": "Your application description",
+      "scripts": {
+        "dev": "hori s"
+      },
+      "dependencies": {
+        "hori": `^${this.package.version}`,
+      },
+      "license": "ISC"
+    }
+    fs.writeFileSync(`${appPath}/package.json`, data)
+    console.log(chalk.green(`Created file package.json`))
 
     process.exit()
   }
