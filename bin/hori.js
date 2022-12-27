@@ -10,7 +10,11 @@ class HoriBin {
   }
 
   fetchArgv(key){
-
+    if (this.command === key){
+      const commandIndex = this.argv.indexOf(key)
+      const value = this.argv[commandIndex + 1]
+      return value
+    }
   }
 
   processVersion(){
@@ -21,9 +25,44 @@ class HoriBin {
     }
   }
 
+  formatString(str, bit){
+    const spaceLength = bit - str.length
+    let output = ""
+    for (let i = 0; i < spaceLength; i++){
+      output = `${output} `
+    }
+    output = ` ${str}${output}`
+    return output
+  }
+
+  processHelp(){
+    if (["-h", "help", "--help"].includes(this.command)){
+      const list = [
+        {k: "-v,version,--version", v: "Printer current version."},
+        {k: "-h,help,--help", v: "Printer the command list."},
+        {k: "new <name>", v: "Create a new basic Hori application structure."},
+        {k: "-s,start", v: "To start a Hori application process."},
+        {k: "-p <port>", v: "Set a port to start, default is 3000."},
+        {k: "-e <env>", v: "Set a env to start, default is development."}
+      ]
+      list.forEach((obj) => {
+        process.stdout.write(this.formatString(chalk.green(obj.k), 40))
+        console.log(obj.v)
+      })
+    }
+  }
+
+  processInitialize(){
+    const appName = this.fetchArgv("new")
+    if (!appName) return
+
+  }
+
   parseCommandLine(){
 
     this.processVersion()
+    this.processHelp()
+    this.processInitialize()
 
     // const argv = process.argv
     // const command = argv[1]
