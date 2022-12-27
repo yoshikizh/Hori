@@ -72,6 +72,15 @@ class HoriBin {
     fs.mkdirSync(`${appPath}/app/controllers`)
     console.log(chalk.green(`Created folder app/controllers`))
 
+    fs.mkdirSync(`${appPath}/app/views`)
+    console.log(chalk.green(`Created folder app/views`))
+
+    fs.mkdirSync(`${appPath}/app/views/layouts`)
+    console.log(chalk.green(`Created folder app/views/layouts`))
+
+    fs.mkdirSync(`${appPath}/app/views/Home`)
+    console.log(chalk.green(`Created folder app/views/Home`))
+
     fs.mkdirSync(`${appPath}/config`)
     console.log(chalk.green(`Created folder config`))
 
@@ -105,6 +114,14 @@ class HoriBin {
     data = fs.readFileSync(scaffoldPath+"/new/app/controllers/HomeController.js")
     fs.writeFileSync(`${appPath}/app/controllers/HomeController.js`, data)
     console.log(chalk.green(`Created file app/controllers/HomeController.js`))
+
+    data = fs.readFileSync(scaffoldPath+"/new/app/views/layouts/application_layout.html.ejs")
+    fs.writeFileSync(`${appPath}/app/views/layouts/application_layout.html.ejs`, data)
+    console.log(chalk.green(`Created file app/views/layouts/application_layout.html.ejs`))
+
+    data = fs.readFileSync(scaffoldPath+"/new/app/views/Home/index.html.ejs")
+    fs.writeFileSync(`${appPath}/app/views/Home/index.html.ejs`, data)
+    console.log(chalk.green(`Created file app/views/Home/index.html.ejs`))
 
     data = fs.readFileSync(scaffoldPath+"/new/package.json")
     data = data.toString().replace("Your application name", appName)
