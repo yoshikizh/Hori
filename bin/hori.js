@@ -22,17 +22,8 @@ class HoriBin {
       const name = this.package.name
       const version = this.package.version
       console.log(chalk.green(`${name} application ${version}`))
+      process.exit()
     }
-  }
-
-  formatString(str, bit){
-    const spaceLength = bit - str.length
-    let output = ""
-    for (let i = 0; i < spaceLength; i++){
-      output = `${output} `
-    }
-    output = ` ${str}${output}`
-    return output
   }
 
   processHelp(){
@@ -41,45 +32,48 @@ class HoriBin {
         {k: "-v,version,--version", v: "Printer current version."},
         {k: "-h,help,--help", v: "Printer the command list."},
         {k: "new <name>", v: "Create a new basic Hori application structure."},
-        {k: "-s,start", v: "To start a Hori application process."},
+        {k: "s,start", v: "To start a Hori application process."},
         {k: "-p <port>", v: "Set a port to start, default is 3000."},
         {k: "-e <env>", v: "Set a env to start, default is development."}
       ]
       list.forEach((obj) => {
-        process.stdout.write(this.formatString(chalk.green(obj.k), 40))
+        process.stdout.write(this._formatString(chalk.green(obj.k), 40))
         console.log(obj.v)
       })
+      process.exit()
     }
   }
 
-  processInitialize(){
+  processNew(){
     const appName = this.fetchArgv("new")
     if (!appName) return
 
+
+    process.exit()
+  }
+
+  processStart(){
+    if (["s", "start"].includes(this.command)){
+      require("../HoriFramework").run()
+    }
   }
 
   parseCommandLine(){
-
     this.processVersion()
     this.processHelp()
-    this.processInitialize()
+    this.processNew()
+    this.processStart()
+  }
 
-    // const argv = process.argv
-    // const command = argv[1]
-    // const root  = process.cwd()
-
-    
-    // if (["-v", "version", "--version"].includes(command)){
-
-    //   let commandIndex
-    //   commandIndex = argv.indexOf("-v")
-    //   if (commandIndex < 0) commandIndex = argv.indexOf("version")
-    //   if (commandIndex < 0) commandIndex = argv.indexOf("--version")
-
-      
-
-    //   process.exit()
-    // }
+  // private
+  _formatString(str, bit){
+    const spaceLength = bit - str.length
+    let output = ""
+    for (let i = 0; i < spaceLength; i++){
+      output = `${output} `
+    }
+    output = ` ${str}${output}`
+    return output
   }
 
   static run(){
