@@ -7,7 +7,7 @@ class HoriBin {
   constructor(){
     this.package = require("../package")
     this.argv = process.argv
-    this.command = this.argv[2]
+    this.command = this.argv[1]
   }
 
   fetchArgv(key){
