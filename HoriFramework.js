@@ -16,7 +16,7 @@ class HoriFramework {
     this.application = null
   }
 
-  initialize(){
+  initialize(commandlineConfig){
     this.npmInfo = require("./package.json")
     this.processEnv = process.env
     this.libs.express = require('express');
@@ -27,9 +27,7 @@ class HoriFramework {
     this.npmRoot = __dirname
 
     // load env
-    this.env = this.processEnv["NODE_ENV"] || "development";
-
-    this.checkEnv()
+    this.env = commandlineConfig.env || this.processEnv["NODE_ENV"] || "development";
 
     // merge config
     this.config = require(`${this.root}/config/env/${this.env}`)
@@ -46,19 +44,11 @@ class HoriFramework {
     this.libs.log4js.configure(log4jsConfog);
     this.logger = this.libs.log4js.getLogger(this.env);
 
-    this.config.port = this.config.port || 3001;
+    this.config.port = commandlineConfig.port || 3000;
 
     this.application = require("./HoriApplication").create(this)
     this.application.initialize()
     return this
-  }
-
-  checkEnv(){
-    const file = `${this.root}/config/env/${this.env}.js`
-    console.log(1111, file)
-    if (!fs.existsSync(file)) {
-
-    }
   }
 
   run(){
@@ -76,17 +66,17 @@ class HoriFramework {
     this.logger.debug(msg)
   }
 
-  static create(){
+  static create(config){
     if (!HoriFramework.__instance__){
-      HoriFramework.__instance__ = new HoriFramework()
+      HoriFramework.__instance__ = new HoriFramework(config)
       global.Hori = HoriFramework.__instance__
       global.HoriApplicationController = require("./HoriApplicationController")
     }
     return Hori
   }
 
-  static run(config = {}){
-    this.create().initialize().run()
+  static run(commandlineConfig = {}){
+    this.create().initialize(commandlineConfig).run()
   }
 }
 HoriFramework.__instance__ = null
