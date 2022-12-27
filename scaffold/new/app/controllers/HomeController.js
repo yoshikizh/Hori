@@ -5,3 +5,5 @@ class HomeController extends ApplicationController {
 		this.renderJSON({msg: "Hello Hori."})
 	}
 }
+
+module.exports = HomeController

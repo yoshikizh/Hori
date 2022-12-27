@@ -102,9 +102,9 @@ class HoriBin {
     fs.writeFileSync(`${appPath}/app/controllers/ApplicationController.js`, data)
     console.log(chalk.green(`Created file app/controllers/ApplicationController.js`))
 
-    data = fs.readFileSync(scaffoldPath+"/new/app/controllers/HomeApplication.js")
-    fs.writeFileSync(`${appPath}/app/controllers/HomeApplication.js`, data)
-    console.log(chalk.green(`Created file app/controllers/HomeApplication.js`))
+    data = fs.readFileSync(scaffoldPath+"/new/app/controllers/HomeController.js")
+    fs.writeFileSync(`${appPath}/app/controllers/HomeController.js`, data)
+    console.log(chalk.green(`Created file app/controllers/HomeController.js`))
 
     data = fs.readFileSync(scaffoldPath+"/new/package.json")
     data = data.toString().replace("Your application name", appName)

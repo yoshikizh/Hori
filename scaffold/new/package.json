@@ -6,7 +6,7 @@
     "dev": "hori s"
   },
   "dependencies": {
-    "hori": "Your hori version",
+    "hori": "Your hori version"
   },
   "license": "ISC"
 }
