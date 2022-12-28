@@ -33,13 +33,21 @@ class HoriFramework {
     this.config = require(`${this.root}/config/env/${this.env}`)
 
     // config the log
+    const logConfiguration = this.config.logConfiguration
     this.libs.log4js = require("log4js");
-    const logDir = this.config.logDir || 'logs'
+    const logDir = logConfiguration.output || 'logs'
     const log4jsConfog = {
       appenders: {},
-      categories: { default: { appenders: [this.env], level: "debug" } }
+      categories: { default: { appenders: [this.env], level: logConfiguration.level || "debug" } }
     }
-    log4jsConfog.appenders[this.env] = { type: "file", filename: `${logDir}/${this.env}.log` }
+    const appender = { type: logConfiguration.type || "console" }
+    if (["file","dateFile"].includes(appender.type) && logConfiguration.file){
+      Object.assign(appender, logConfiguration.file)
+      if (appender.filename){
+        appender.filename = `${logDir}/${appender.filename}`
+      }
+    }
+    log4jsConfog.appenders[this.env] = appender
 
     this.libs.log4js.configure(log4jsConfog);
     this.logger = this.libs.log4js.getLogger(this.env);
