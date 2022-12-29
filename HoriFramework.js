@@ -42,8 +42,6 @@ class HoriFramework {
     this.libs.log4js = require("log4js");
     const logDir = logConfiguration.output || 'logs'
 
-    console.log("-----", this.config)
-
     const log4jsConfog = {
       appenders: {},
       categories: { default: { appenders: [this.env], level: logConfiguration.level || "debug" } }
