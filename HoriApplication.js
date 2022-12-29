@@ -16,6 +16,12 @@ class HoriApplication {
     this.listen()
   }
 
+  runWithoutListen(){
+    this.setMiddleware();
+    this.setRouting()
+    this.startMappingRoute();
+  }
+
   async execAction(req, res, action){
     if (!res.finished){
       await action(req, res);
@@ -84,9 +90,6 @@ class HoriApplication {
     Object.assign(params, req.body)
     const message = `[${Date.now()}] -- : Started ${req.method} ${req.url} Processing by ${controller_name}#${action_name} With the paramaters: ${JSON.stringify(params)}`
     this.hori.logger.info(message);
-    if (this.hori.env === "development"){
-      console.log(message)
-    }
     try {
       const controller = new Controller(controller_name,action_name);
       controller.req = req;
@@ -109,13 +112,8 @@ class HoriApplication {
         }
       }
     } catch (e) {
-      if (this.hori.env === "development") {
-        console.log(e.stack)
-        res.status(500).send(e.stack);
-      } else {
-        res.status(500).send('Server is busy, please try later .');
-      }
-      this.hori.logger.error(e);
+      res.status(500).send('Server is busy, please try later .');
+      this.hori.logger.error(e.stack);
     }
   }
 

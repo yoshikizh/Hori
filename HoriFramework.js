@@ -1,4 +1,5 @@
 const fs = require("fs")
+const chalk = require("chalk")
 
 class HoriFramework {
   constructor(){
@@ -14,9 +15,13 @@ class HoriFramework {
     this.env = null;
     this.config = null;
     this.application = null
+    this.commandlineConfig = null
+    this.appFiles = []
+    this.restarted = false
   }
 
   initialize(commandlineConfig){
+    this.commandlineConfig = commandlineConfig
     this.npmInfo = require("./package.json")
     this.processEnv = process.env
     this.libs.express = require('express');
@@ -36,6 +41,9 @@ class HoriFramework {
     const logConfiguration = this.config.logConfiguration
     this.libs.log4js = require("log4js");
     const logDir = logConfiguration.output || 'logs'
+
+    console.log("-----", this.config)
+
     const log4jsConfog = {
       appenders: {},
       categories: { default: { appenders: [this.env], level: logConfiguration.level || "debug" } }
@@ -59,19 +67,68 @@ class HoriFramework {
     return this
   }
 
+  clearRequireCache(){
+    delete require.cache[require.resolve(`${this.root}/config/env/${this.env}`)]
+    delete require.cache[require.resolve(`${this.root}/config/initializer`)]
+    delete require.cache[require.resolve(`${this.root}/config/middlewares`)]
+    delete require.cache[require.resolve(`${this.root}/config/routes`)]
+  }
+
+  restart(){
+    this.restarted = true
+    this.clearRequireCache()
+    HoriFramework.run(this.commandlineConfig)
+  }
+
   run(){
     // run custom code
     require(`${this.root}/config/initializer`)()
 
     // run app
-    this.application.run()
+    if (this.restarted){
+      this.application.runWithoutListen()
+    } else {
+      this.application.run()
+    }
+    
+    // after run handle
+    this.handleAfterRun()
   }
 
-  debug(msg){
-    if (Hori.env === "development"){
-      console.log(msg)
-    }
-    this.logger.debug(msg)
+  handleAfterRun(){
+    this.monitorFilesChange()
+  }
+
+  stopMonitorFilesChange(){
+    this.appFiles.forEach((file) => {
+      fs.unwatchFile(file)
+    })
+  }
+
+  monitorFilesChange(){
+    require('events').EventEmitter.defaultMaxListeners = 10000;
+    this.searchAppFilesFromDir(`${this.root}/app`)
+    this.searchAppFilesFromDir(`${this.root}/config`)
+    this.appFiles.forEach((file) => {
+      fs.watchFile(file, {interval: this.config.autoRestartMonitorInterval}, (curr, prev) => {
+        Hori.logger.info(chalk.green(file + " was changed!"))
+        this.stopMonitorFilesChange()
+        this.restart()
+      });
+    })
+  }
+
+  searchAppFilesFromDir(dir){
+    const files = fs.readdirSync(dir)
+    files.forEach((filename) => {
+      const fileToPath = dir + "/" + filename
+      const state = fs.statSync(fileToPath)
+      if (state.isFile()){
+        this.appFiles.push(fileToPath)
+      } else {
+        this.searchAppFilesFromDir(fileToPath)
+      }
+    })
   }
 
   static create(config){

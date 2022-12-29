@@ -2,6 +2,11 @@ module.exports = {
   // For Hori
   appName: "Hori Api",
 
+  // speed up for development
+  // Files under the app and config folders will be monitor.
+  autoRestartWhenFileChanged: true,
+  autoRestartMonitorInterval: 2000,
+
   // For log config
   logConfiguration: {
 
@@ -9,10 +14,10 @@ module.exports = {
     output: "./logs",
 
     // console | file
-    type: "file",  
+    type: "console",  
 
     // output lowest level
-    level: "debug",    
+    level: "debug",
 
     // blow if avaliable if type is file or dataFile
     file: {
