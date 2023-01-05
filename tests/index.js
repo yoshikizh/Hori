@@ -1,1 +1,1 @@
-require("../HoriFramework").run()
+require("../lib/HoriFramework").run({}, true)

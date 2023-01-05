@@ -2,11 +2,6 @@ module.exports = {
   // For Hori
   appName: "Your application name",
 
-  // speed up for development
-  // Files under the app and config folders will be monitor.
-  autoRestartWhenFileChanged: true,
-  autoRestartMonitorInterval: 2000,
-
   // For log config
   logConfiguration: {
 
@@ -14,12 +9,12 @@ module.exports = {
     output: "./logs",
 
     // console | file
-    type: "console",  
+    type: "console",
 
     // output lowest level
     level: "debug",
 
-    // blow if avaliable if type is file or dataFile
+    // blow is avaliable if type is file
     file: {
       filename: "development.log",
       compress: true,
@@ -30,7 +25,29 @@ module.exports = {
       alwaysIncludePattern: true,
       pattern: "yyyy-MM-dd"
     }
+  },
+
+  // For db connection info
+  database: {
+
+    // If you want to use model HoriRecord(ORM), enable the configuration.
+    // Currently only support mongodb
+    // Install mongodb and add mongoose to your package.json
+    enable: true,
+    adapter: "mongodb",
+    mongodb: {
+      host: "localhost:27017",
+
+      // More connection option refre -> https://mongoosejs.com/docs/connections.html
+      // [!Notice] Different versions of mongoose have different configurations
+      option: {
+        user: "username",
+        pass: "password",
+        dbName: "dbname",
+      }
+    }
   }
+
 
   // For Application
   // Hori.config can get this file object directly.

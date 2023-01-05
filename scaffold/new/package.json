@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Your application description",
   "scripts": {
-    "dev": "hori s"
+    "dev": "hori s --nodemon"
   },
   "dependencies": {
     "hori": "Your hori version"

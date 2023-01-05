@@ -1,6 +1,6 @@
 {
   "name": "hori",
-  "version": "0.0.32",
+  "version": "0.0.42",
   "description": "A simple and lightweight Web framework.",
   "main": "HoriFramework.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "hori": "sh ./bin/hori"
   },
   "bin": {
-    "hori": "./bin/hori.js"
+    "hori": "./bin/start.js"
   },
   "dependencies": {
     "express": "^4.16.0",
@@ -16,7 +16,9 @@
     "cookie-parser": "^1.4.6",
     "chalk": "4.1.2",
     "pm2": "5.2.0",
-    "ejs": "3.1.8"
+    "ejs": "3.1.8",
+    "mongoose": "6.8.2",
+    "nodemon": "2.0.20"
   },
   "keywords": [
     "mvc"

@@ -4,10 +4,9 @@ const fs = require("fs")
 const path = require("path")
 
 class HoriBin {
-
-  constructor(){
+  constructor(argv){
     this.package = require("../package")
-    this.argv = process.argv
+    this.argv = argv
     this.command = this.argv[2]
   }
 
@@ -71,6 +70,9 @@ class HoriBin {
 
     fs.mkdirSync(`${appPath}/app/controllers`)
     console.log(chalk.green(`Created folder app/controllers`))
+
+    fs.mkdirSync(`${appPath}/app/models`)
+    console.log(chalk.green(`Created folder app/models`))
 
     fs.mkdirSync(`${appPath}/app/views`)
     console.log(chalk.green(`Created folder app/views`))
@@ -136,7 +138,7 @@ class HoriBin {
     if (["s", "start"].includes(this.command)){
       const port = this.fetchOption("-p") || null
       const env = this.fetchOption("-e") || null
-      require("../HoriFramework").run({port, env})
+      require("../lib/HoriFramework").run({port, env})
     }
   }
 
@@ -158,12 +160,12 @@ class HoriBin {
     return output
   }
 
-  static run(){
-    const horiBin = new HoriBin()
+  static run(argv){
+    const horiBin = new HoriBin(argv)
     horiBin.parseCommandLine()
   }
 }
 
-HoriBin.run()
+module.exports = HoriBin
 
 
