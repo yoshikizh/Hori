@@ -36,7 +36,7 @@ module.exports = {
     enable: true,
     adapter: "mongodb",
     mongodb: {
-      host: "localhost:27017",
+      host: "127.0.0.1:27017",
 
       // More connection option refre -> https://mongoosejs.com/docs/connections.html
       // [!Notice] Different versions of mongoose have different configurations
